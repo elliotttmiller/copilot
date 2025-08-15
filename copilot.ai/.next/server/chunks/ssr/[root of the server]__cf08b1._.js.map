@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 65, "column": 0}, "map": {"version":3,"sources":["file://c%3A/Users/AMD/copilot/copilot.ai/pages/_app.tsx"],"sourcesContent":["import \"../components/agentic-ui.css\";\r\nimport { CopilotKit } from \"@copilotkit/react-core\";\r\nimport type { AppProps } from \"next/app\";\r\n\r\nfunction MyApp({ Component, pageProps }: AppProps) {\r\n  return (\r\n    <CopilotKit\r\n      runtimeUrl={process.env.NEXT_PUBLIC_COPILOTKIT_API_URL}\r\n      publicLicenseKey={process.env.NEXT_PUBLIC_COPILOTKIT_API_KEY || \"ck_pub_011541242c359e759e3256628c64144b\"}\r\n    >\r\n      <Component {...pageProps} />\r\n    </CopilotKit>\r\n  );\r\n}\r\n\r\nexport default MyApp;\r\n"],"names":[],"mappings":";;;;AACA;;;;;;;;AAGA,SAAS,MAAM,EAAE,SAAS,EAAE,SAAS,EAAY;IAC/C,qBACE,qKAAC,0JAAA,CAAA,aAAU;QACT,UAAU;QACV,kBAAkB,+EAA8C;kBAEhE,cAAA,qKAAC;YAAW,GAAG,SAAS;;;;;;;;;;;AAG9B;uCAEe"}},
+    {"offset": {"line": 95, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

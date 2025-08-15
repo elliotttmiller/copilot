@@ -1,0 +1,33 @@
+(globalThis.TURBOPACK = globalThis.TURBOPACK || []).push([
+    "static/chunks/pages_agentic-ui_5771e1._.js",
+    {},
+]);
+(globalThis.TURBOPACK_CHUNK_LISTS = globalThis.TURBOPACK_CHUNK_LISTS || []).push({
+  "path": "static/chunks/pages_agentic-ui_5771e1._.js",
+  "chunks": [
+    "static/chunks/node_modules_next_67fd92._.js",
+    "static/chunks/node_modules_react-dom_82bb97._.js",
+    "static/chunks/node_modules_prosemirror-view_dist_index_bca8cb.js",
+    "static/chunks/node_modules_@tiptap_core_dist_0bb8cf._.js",
+    "static/chunks/node_modules_@copilotkit_react-core_dist_0b4054._.js",
+    "static/chunks/node_modules_@copilotkit_runtime-client-gql_dist_fdeabe._.js",
+    "static/chunks/node_modules_zod_v3_442a85._.js",
+    "static/chunks/node_modules_925507._.js",
+    "static/chunks/node_modules_fe92d0._.js",
+    "static/chunks/node_modules_d53219._.js",
+    "static/chunks/node_modules_90e3ee._.js",
+    "static/chunks/node_modules_@copilotkit_react-ui_dist_57d7ff._.js",
+    "static/chunks/node_modules_refractor_3cbdf1._.js",
+    "static/chunks/node_modules_parse5_dist_d6aa1f._.js",
+    "static/chunks/node_modules_@headlessui_react_dist_cbb4a7._.js",
+    "static/chunks/node_modules_@floating-ui_react_dist_dec9c2._.js",
+    "static/chunks/node_modules_@tiptap_706930._.js",
+    "static/chunks/node_modules_@copilotkit_9570c8._.js",
+    "static/chunks/node_modules_remark-parse_cfbe08._.js",
+    "static/chunks/node_modules_@floating-ui_2cabf2._.js",
+    "static/chunks/node_modules_f888e0._.js",
+    "static/chunks/[root of the server]__77cf12._.js",
+    "static/chunks/_855628._.css"
+  ],
+  "source": "entry"
+});

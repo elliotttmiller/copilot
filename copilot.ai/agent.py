@@ -1,6 +1,6 @@
 import asyncio
 from pydantic_ai import Agent
-from pydantic_ai.ag_ui import StateDeps
+from pydantic_ai import StateDeps
 from ag_ui.core import StateSnapshotEvent, EventType
 from agent_state import AgentState
 
@@ -17,7 +17,7 @@ async def update_steps(steps: list[str]) -> StateSnapshotEvent:
             snapshot={"observed_steps": steps[:i+1]}
         )
     # Final state snapshot
-    return StateSnapshotEvent(
+    yield StateSnapshotEvent(
         type=EventType.STATE_SNAPSHOT,
         snapshot={"observed_steps": steps}
     )

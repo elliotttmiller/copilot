@@ -97,7 +97,7 @@ useCopilotAction({
 });
 ```
 
-<h3>Integrate In-App CoAgents with LangGraph</h3>
+<h3>Integrate In-App CoAgents with CrewAI and Pydantic AI</h3>
 
 ```ts
 // Share state between app and agent
@@ -147,7 +147,7 @@ useCopilotAction({
 ```
 
 ```ts
-// intermediate agent state streaming (supports both LangGraph.js + LangGraph python)
+// intermediate agent state streaming (supports CrewAI and Pydantic AI)
 const modifiedConfig = copilotKitCustomizeConfig(config, {
   emitIntermediateState: [{ 
     stateKey: "outline", 
@@ -173,7 +173,7 @@ const response = await ChatOpenAI({ model: "gpt-4o" }).invoke(messages, modified
 </p>
 
 ## 🖥️ AG-UI: The Agent–User Interaction Protocol
-Connect agent workflow to user-facing apps, with deep partnerships and 1st-party integrations across the agentic stack—including LangGraph, CrewAI, and more.
+Connect agent workflow to user-facing apps, with deep partnerships and 1st-party integrations across the agentic stack—including CrewAI, Pydantic AI, and more.
 
 
   <a href="https://github.com/ag-ui-protocol/ag-ui" target="_blank">

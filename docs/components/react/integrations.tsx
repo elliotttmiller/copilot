@@ -28,20 +28,6 @@ const integrations: Integration[] = [
     href: "/direct-to-llm",
   },
   {
-    title: "LangGraph",
-    description: "LangGraph is a framework for building and deploying AI agents.",
-    logo: <SiLangchain className="w-8 h-8" />,
-    bgGradient: "bg-gradient-to-b from-purple-700 to-purple-400 text-purple-100",
-    href: "/coagents",
-  },
-  {
-    title: "Mastra",
-    description: "Mastra is a framework for building and deploying AI agents.",
-    logo: <MastraIcon className="w-8 h-8" />,
-    bgGradient: "bg-gradient-to-b from-black to-zinc-800 text-white",
-    href: "/mastra",
-  },
-  {
     title: "CrewAI Crews",
     description: "CrewAI is a framework for building and deploying AI agents.",
     logo: <SiCrewai className="w-8 h-8" />,
@@ -49,39 +35,11 @@ const integrations: Integration[] = [
     href: "/crewai-crews",
   },
   {
-    title: "CrewAI Flows",
-    description: "CrewAI is a framework for building and deploying AI agents.",
-    logo: <SiCrewai className="w-8 h-8" />,
-    bgGradient: "bg-gradient-to-b from-[#FA694C] to-[#FE8A71] text-white",
-    href: "/crewai-flows",
-  },
-  {
-    title: "Agno",
-    description: "Agno is a framework for building and deploying AI agents.",
-    logo: <AgnoIcon className="w-8 h-8" />,
-    bgGradient: "bg-[#FF3C1A] text-white",
-    href: "/agno",
-  },
-  {
-    title: "LlamaIndex",
-    description: "LlamaIndex is a framework for building and deploying AI agents.",
-    logo: <LlamaIndexIcon className="w-8 h-8" />,
-    bgGradient: "bg-gradient-to-b from-pink-500 via-purple-500 to-blue-400 text-pink-100",
-    href: "/llamaindex",
-  },
-  {
     title: "Pydantic AI",
     description: "Pydantic AI is a framework for building and deploying AI agents.",
     logo: <PydanticAIIcon className="w-8 h-8 text-bold" />,
     bgGradient: "bg-[#ED2762] text-white",
     href: "/pydantic-ai",
-  },
-  {
-    title: "AutoGen2",
-    description: "AutoGen2 is a framework for building and deploying AI agents.",
-    logo: <AG2Icon className="w-8 h-8 text-bold" />,
-    bgGradient: "bg-gradient-to-b from-indigo-700 to-indigo-400 text-indigo-100",
-    href: "/ag2",
   },
   // Add more integrations here
 ];

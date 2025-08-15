@@ -1,0 +1,9 @@
+__turbopack_load_page_chunks__("/history", [
+  "static/chunks/node_modules_next_f80f03._.js",
+  "static/chunks/node_modules_react-dom_82bb97._.js",
+  "static/chunks/node_modules_d52352._.js",
+  "static/chunks/[root of the server]__2fd786._.js",
+  "static/chunks/_f5a112._.css",
+  "static/chunks/pages_history_5771e1._.js",
+  "static/chunks/pages_history_0ff58f._.js"
+])

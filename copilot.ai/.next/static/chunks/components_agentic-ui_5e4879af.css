@@ -1,0 +1,116 @@
+/* [project]/components/agentic-ui.css [client] (css) */
+.agentic-ui-container {
+  background: #f8f9fa;
+  border-radius: 12px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, .08);
+}
+
+.agentic-ui-nav {
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.chat-ui {
+  margin-top: 2rem;
+}
+
+.editor-section {
+  background: #fff;
+  border-radius: 8px;
+  margin-top: 2rem;
+  padding: 1rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, .06);
+}
+
+.agent-state {
+  background: #e9ecef;
+  border-radius: 6px;
+  margin: 1rem 0;
+  padding: .5rem 1rem;
+  font-size: 1rem;
+}
+
+.multi-agent-states {
+  margin-top: 2rem;
+}
+
+.hitl-approval {
+  background: #fff3cd;
+  border: 1px solid #ffeeba;
+  border-radius: 8px;
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.agentic-ui-button, .chat-send-btn, .settings-save-btn {
+  color: #fff;
+  cursor: pointer;
+  background: #6c63ff;
+  border: none;
+  border-radius: 6px;
+  margin-top: 1rem;
+  padding: .5rem 1.2rem;
+  font-weight: 500;
+}
+
+.agentic-ui-button:disabled, .chat-send-btn:disabled {
+  cursor: not-allowed;
+  background: #bdbdbd;
+}
+
+.settings-form {
+  background: #fff;
+  border-radius: 8px;
+  margin-top: 2rem;
+  padding: 1rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, .06);
+}
+
+.settings-input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  margin: .5rem 0 1rem;
+  padding: .5rem;
+}
+
+.history-list {
+  background: #fff;
+  border-radius: 8px;
+  margin-top: 2rem;
+  padding: 1rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, .06);
+}
+
+.history-item {
+  border-bottom: 1px solid #eee;
+  margin-bottom: 1rem;
+  padding-bottom: .5rem;
+}
+
+.agentic-ui-steps, .agentic-ui-progress {
+  background: #fff;
+  border-radius: 8px;
+  margin-top: 2rem;
+  padding: 1rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, .06);
+}
+
+.agentic-ui-step {
+  margin-bottom: .5rem;
+  font-size: 1rem;
+}
+
+.agentic-ui-result {
+  color: #0f5132;
+  background: #d1e7dd;
+  border-radius: 8px;
+  margin-top: 2rem;
+  padding: 1rem;
+  font-weight: 500;
+}
+
+/*# sourceMappingURL=components_agentic-ui_5e4879af.css.map*/

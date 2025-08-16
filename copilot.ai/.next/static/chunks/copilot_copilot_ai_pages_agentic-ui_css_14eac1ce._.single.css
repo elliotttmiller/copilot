@@ -1,0 +1,52 @@
+/* [project]/copilot/copilot.ai/pages/agentic-ui.css [client] (css) */
+.agentic-ui-container {
+  background: #fff;
+  border-radius: 12px;
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, .08);
+}
+
+.agentic-ui-form {
+  gap: 1rem;
+  margin-bottom: 2rem;
+  display: flex;
+}
+
+.agentic-ui-input {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  flex: 1;
+  padding: .75rem;
+  font-size: 1rem;
+}
+
+.agentic-ui-button {
+  color: #fff;
+  cursor: pointer;
+  background: #0070f3;
+  border: none;
+  border-radius: 6px;
+  padding: .75rem 1.5rem;
+  font-size: 1rem;
+}
+
+.agentic-ui-result {
+  background: #f6f8fa;
+  border-radius: 6px;
+  margin-top: 2rem;
+  padding: 1rem;
+  font-size: 1.1rem;
+}
+
+.agentic-ui-steps {
+  margin-top: 2rem;
+}
+
+.agentic-ui-step {
+  margin-bottom: .5rem;
+  font-size: 1rem;
+}
+
+/*# sourceMappingURL=copilot_copilot_ai_pages_agentic-ui_css_14eac1ce._.single.css.map*/

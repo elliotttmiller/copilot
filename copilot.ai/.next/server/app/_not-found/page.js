@@ -1,7 +1,12 @@
 const CHUNK_PUBLIC_PATH = "server/app/_not-found/page.js";
 const runtime = require("../../chunks/ssr/[turbopack]_runtime.js");
-runtime.loadChunk("server/chunks/ssr/node_modules_next_dist_7c458f._.js");
-runtime.loadChunk("server/chunks/ssr/[root of the server]__550d4a._.js");
-runtime.loadChunk("server/chunks/ssr/_326fe6._.js");
-runtime.getOrInstantiateRuntimeModule("[project]/.next-internal/server/app/_not-found/page/actions.js [app-rsc] (ecmascript)", CHUNK_PUBLIC_PATH);
-module.exports = runtime.getOrInstantiateRuntimeModule("[project]/node_modules/next/dist/esm/build/templates/app-page.js?page=/_not-found/page { MODULE_0 => \"[project]/node_modules/next/dist/client/components/not-found-error.js [app-rsc] (ecmascript, Next.js server component)\" } [app-rsc] (ecmascript)", CHUNK_PUBLIC_PATH).exports;
+runtime.loadChunk("server/chunks/ssr/585df_next_dist_3d4a736c._.js");
+runtime.loadChunk("server/chunks/ssr/[root-of-the-server]__72e60385._.js");
+runtime.loadChunk("server/chunks/ssr/585df_e13d2d91._.js");
+runtime.loadChunk("server/chunks/ssr/585df_next_dist_client_components_e2b99e31._.js");
+runtime.loadChunk("server/chunks/ssr/585df_next_dist_client_components_builtin_forbidden_5a7fe73b.js");
+runtime.loadChunk("server/chunks/ssr/585df_next_dist_6352c012._.js");
+runtime.loadChunk("server/chunks/ssr/[root-of-the-server]__9fd7de83._.js");
+runtime.getOrInstantiateRuntimeModule("[project]/copilot/copilot.ai/.next-internal/server/app/_not-found/page/actions.js [app-rsc] (server actions loader, ecmascript)", CHUNK_PUBLIC_PATH);
+runtime.getOrInstantiateRuntimeModule("[project]/copilot/copilot.ai/node_modules/next/dist/esm/build/templates/app-page.js?page=/_not-found/page { MODULE_0 => \"[project]/copilot/copilot.ai/node_modules/next/dist/client/components/builtin/layout.js [app-rsc] (ecmascript, Next.js Server Component)\", MODULE_1 => \"[project]/copilot/copilot.ai/node_modules/next/dist/client/components/builtin/not-found.js [app-rsc] (ecmascript, Next.js Server Component)\", MODULE_2 => \"[project]/copilot/copilot.ai/node_modules/next/dist/client/components/builtin/forbidden.js [app-rsc] (ecmascript, Next.js Server Component)\", MODULE_3 => \"[project]/copilot/copilot.ai/node_modules/next/dist/client/components/builtin/unauthorized.js [app-rsc] (ecmascript, Next.js Server Component)\", MODULE_4 => \"[project]/copilot/copilot.ai/node_modules/next/dist/client/components/builtin/not-found.js [app-rsc] (ecmascript, Next.js Server Component)\" } [app-rsc] (ecmascript)", CHUNK_PUBLIC_PATH);
+module.exports = runtime.getOrInstantiateRuntimeModule("[project]/copilot/copilot.ai/node_modules/next/dist/esm/build/templates/app-page.js?page=/_not-found/page { MODULE_0 => \"[project]/copilot/copilot.ai/node_modules/next/dist/client/components/builtin/layout.js [app-rsc] (ecmascript, Next.js Server Component)\", MODULE_1 => \"[project]/copilot/copilot.ai/node_modules/next/dist/client/components/builtin/not-found.js [app-rsc] (ecmascript, Next.js Server Component)\", MODULE_2 => \"[project]/copilot/copilot.ai/node_modules/next/dist/client/components/builtin/forbidden.js [app-rsc] (ecmascript, Next.js Server Component)\", MODULE_3 => \"[project]/copilot/copilot.ai/node_modules/next/dist/client/components/builtin/unauthorized.js [app-rsc] (ecmascript, Next.js Server Component)\", MODULE_4 => \"[project]/copilot/copilot.ai/node_modules/next/dist/client/components/builtin/not-found.js [app-rsc] (ecmascript, Next.js Server Component)\" } [app-rsc] (ecmascript)", CHUNK_PUBLIC_PATH).exports;

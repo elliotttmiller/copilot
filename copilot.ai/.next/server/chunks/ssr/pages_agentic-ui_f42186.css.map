@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack://[project]/pages/agentic-ui.css"],"sourcesContent":[".agentic-ui-container {\r\n  max-width: 600px;\r\n  margin: 2rem auto;\r\n  padding: 2rem;\r\n  background: #fff;\r\n  border-radius: 12px;\r\n  box-shadow: 0 2px 16px rgba(0,0,0,0.08);\r\n}\r\n.agentic-ui-form {\r\n  display: flex;\r\n  gap: 1rem;\r\n  margin-bottom: 2rem;\r\n}\r\n.agentic-ui-input {\r\n  flex: 1;\r\n  padding: 0.75rem;\r\n  border-radius: 6px;\r\n  border: 1px solid #ccc;\r\n  font-size: 1rem;\r\n}\r\n.agentic-ui-button {\r\n  padding: 0.75rem 1.5rem;\r\n  border-radius: 6px;\r\n  background: #0070f3;\r\n  color: #fff;\r\n  border: none;\r\n  font-size: 1rem;\r\n  cursor: pointer;\r\n}\r\n.agentic-ui-result {\r\n  margin-top: 2rem;\r\n  padding: 1rem;\r\n  background: #f6f8fa;\r\n  border-radius: 6px;\r\n  font-size: 1.1rem;\r\n}\r\n.agentic-ui-steps {\r\n  margin-top: 2rem;\r\n}\r\n.agentic-ui-step {\r\n  margin-bottom: 0.5rem;\r\n  font-size: 1rem;\r\n}\r\n"],"names":[],"mappings":"AAAA,uIAQA,0DAKA,+FAOA,mIASA,sGAOA,kCAGA"}},
-    {"offset": {"line": 1, "column": 607}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
-}

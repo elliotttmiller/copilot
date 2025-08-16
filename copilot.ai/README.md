@@ -1,4 +1,99 @@
+# Copilot.ai Integration & Configuration (CopilotKit)
 
+## Overview
+This project uses the official CopilotKit architecture for agentic orchestration, chat, and multi-agent workflows. It integrates the Python backend (FastAPI, CrewAI, CopilotKit SDK) with a Next.js frontend (CopilotKit React hooks/components).
+
+---
+
+## Backend (FastAPI, Python)
+
+- Uses `sdk-python/copilotkit/integrations/fastapi.py` for official FastAPI integration.
+- CrewAI orchestration is implemented in `main.py`.
+- Endpoints are exposed via:
+  ```python
+  from copilotkit.sdk import CopilotKitRemoteEndpoint
+  from copilotkit.integrations.fastapi import add_fastapi_endpoint
+  app = FastAPI()
+  add_fastapi_endpoint(app, CopilotKitRemoteEndpoint(), prefix="copilotkit")
+  ```
+- Debug logging is enabled for agent actions and endpoint requests.
+- Example agent orchestration:
+  ```python
+  @app.post("/run-metacrew")
+  async def run_metacrew(request: Request):
+      # CrewAI orchestration logic
+  ```
+
+---
+
+## Frontend (Next.js, React)
+
+- Uses CopilotKit React hooks and components:
+  - `CopilotProvider` (wraps your app)
+  - `useCopilotChat`, `useCopilotAction`, `useCoAgent` for chat and agent state
+  - UI: `CopilotChat`, `CopilotSidebar`, etc.
+- API route proxies requests to backend:
+  ```ts
+  // pages/api/copilotkit/route.ts
+  export const POST = async (req: NextRequest) => {
+    const body = await req.json();
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_COPILOTKIT_API_URL || "http://localhost:8000/copilotkit/",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      }
+    );
+    const result = await response.json();
+    return new Response(JSON.stringify(result), {
+      status: response.status,
+      headers: { "Content-Type": "application/json" },
+    });
+  };
+  ```
+
+---
+
+## Agent Patterns Supported
+
+- **Single Agent**: Simple agent for focused tasks.
+- **Multi-Agent (Coagents)**: Complex workflows with multiple agents.
+- **CrewAI**: Orchestration for advanced agentic tasks.
+
+---
+
+## Development Workflow
+
+- Use workspace scripts for development and testing.
+- Reference local packages via workspace protocol.
+- Use examples in `examples/` for backend/frontend patterns.
+- Debug logging is enabled for troubleshooting.
+
+---
+
+## Suggestions & Feedback
+
+- Suggestions handled via `CopilotChat` and `useCopilotChatSuggestions`.
+- Feedback actions (approve/reject) supported in CrewAI workflows.
+
+---
+
+## Quickstart
+
+1. Start FastAPI backend: `python main.py` or `uvicorn main:app --reload`
+2. Start Next.js frontend: `npm run dev`
+3. Access UI at `http://localhost:3000`
+4. Chat with your agent and view orchestration in real time.
+
+---
+
+## References
+
+- [CopilotKit Architecture](../rules/copilotkit-architecture.mdc)
+- [Agent Development](../rules/agent-development.mdc)
+- [Frontend Development](../rules/frontend-development.mdc)
+- [Quick Reference](../rules/quick-reference.mdc)
 <img width="4096" height="1588" alt="header" src="https://github.com/user-attachments/assets/dd638592-fb74-4e22-8c55-49dfc4d0e462" />
 
 

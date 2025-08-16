@@ -10,7 +10,6 @@ python-dotenv
 crewai
 crewai-tools
 pydantic-ai
-copilotkit[crewai]
 copilotkit
 google-generativeai
 tensorflow
@@ -22,3 +21,4 @@ tf-keras
 tokenizers
 transformers
 poetry
+ag-ui-protocol==0.1.7

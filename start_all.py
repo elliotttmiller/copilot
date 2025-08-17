@@ -18,37 +18,56 @@ except ImportError:
 NPM_PATH = r"C:\Program Files\nodejs\npm.cmd"
 
 # Define server commands and ports
+
+# Add Ollama model server
+OLLAMA_CMD = ["ollama", "serve"]
+OLLAMA_PORT = 11434
+OLLAMA_MODEL = "llama3:70b"
+
 SERVERS = [
     {
-        "name": "frontend",
-        "port": 3000,
-        "cwd": os.path.abspath(os.path.join(os.path.dirname(__file__), "frontend")),
-        "cmd": [NPM_PATH, "run", "dev"],
+        "name": "ollama",
+        "port": OLLAMA_PORT,
+        "cwd": os.path.expanduser("~"),
+        "cmd": ["ollama", "serve"],
+        "ready_check": lambda: wait_for_port(OLLAMA_PORT, timeout=30),
     },
     {
         "name": "backend",
         "port": 8000,
         "cwd": os.path.abspath(os.path.join(os.path.dirname(__file__), "backend")),
         "cmd": ["poetry", "run", "uvicorn", "main:app", "--port", "8000"],
+        "ready_check": lambda: wait_for_port(8000, timeout=30),
+    },
+    {
+        "name": "frontend",
+        "port": 3000,
+        "cwd": os.path.abspath(os.path.join(os.path.dirname(__file__), "frontend")),
+        "cmd": [NPM_PATH, "run", "dev"],
+        "ready_check": lambda: wait_for_port(3000, timeout=30),
     },
     {
         "name": "studio",
         "port": 8081,
         "cwd": os.path.expanduser("~"),
         "cmd": ["autogenstudio", "--port", "8081"],
+        "ready_check": lambda: wait_for_port(8081, timeout=30),
     },
 ]
 
 def kill_process_on_port(port):
     """Kill any process running on the given port."""
-    for proc in psutil.process_iter(['pid', 'name', 'connections']):
-        for conn in proc.info.get('connections', []):
-            if conn.status == psutil.CONN_LISTEN and conn.laddr.port == port:
-                print(f"Killing process {proc.info['pid']} on port {port}")
-                try:
-                    proc.kill()
-                except Exception as e:
-                    print(f"Error killing process {proc.info['pid']}: {e}")
+    for proc in psutil.process_iter(['pid', 'name']):
+        try:
+            for conn in proc.connections():
+                if conn.status == psutil.CONN_LISTEN and conn.laddr.port == port:
+                    print(f"Killing process {proc.pid} on port {port}")
+                    try:
+                        proc.kill()
+                    except Exception as e:
+                        print(f"Error killing process {proc.pid}: {e}")
+        except (psutil.AccessDenied, psutil.NoSuchProcess):
+            continue
 
 def safe_print(text):
     # Remove non-ASCII characters for Windows compatibility
@@ -93,34 +112,80 @@ def start_server(server, color):
         print(f"Error starting {server['name']} server: {e}")
         return None
 
+
+import socket
+def wait_for_port(port, timeout=30):
+    start = time.time()
+    while time.time() - start < timeout:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+            result = sock.connect_ex(('localhost', port))
+            if result == 0:
+                return True
+        time.sleep(0.5)
+    return False
+
 def main():
     print("Stopping any running servers...")
     for server in SERVERS:
         kill_process_on_port(server['port'])
     time.sleep(2)
-    print("Starting backend server first...")
+
+    procs = []
+    # Start Ollama first
+    ollama = next(s for s in SERVERS if s['name'] == 'ollama')
+    print("Starting Ollama model server...")
+    ollama_proc = start_server(ollama, COLORS[2])
+    procs.append(ollama_proc)
+    # Robust Ollama readiness check: wait for API to respond
+    import requests
+    ollama_ready = False
+    for _ in range(30):
+        try:
+            resp = requests.get(f"http://127.0.0.1:{OLLAMA_PORT}/api/tags", timeout=2)
+            if resp.status_code == 200:
+                ollama_ready = True
+                break
+        except Exception:
+            pass
+        time.sleep(1)
+    if not ollama_ready:
+        print(f"Ollama server on port {OLLAMA_PORT} did not respond to API in time.")
+        sys.exit(1)
+    print("Ollama server is running and API is responsive.")
+    # Pull model if not present
+    print(f"Ensuring Ollama model '{OLLAMA_MODEL}' is pulled...")
+    subprocess.run(["ollama", "pull", OLLAMA_MODEL])
+
+    # Start backend
     backend = next(s for s in SERVERS if s['name'] == 'backend')
+    print("Starting backend server...")
     backend_proc = start_server(backend, COLORS[1])
-    # Wait for backend to be ready
-    import socket
-    def wait_for_port(port, timeout=30):
-        start = time.time()
-        while time.time() - start < timeout:
-            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-                result = sock.connect_ex(('localhost', port))
-                if result == 0:
-                    return True
-            time.sleep(0.5)
-        return False
-    if not wait_for_port(backend['port']):
+    procs.append(backend_proc)
+    if not backend['ready_check']():
         print(f"Backend server on port {backend['port']} did not start in time.")
         sys.exit(1)
     print("Backend server is running.")
-    print("Starting frontend and studio servers...")
+
+    # Start frontend
     frontend = next(s for s in SERVERS if s['name'] == 'frontend')
-    studio = next(s for s in SERVERS if s['name'] == 'studio')
+    print("Starting frontend server...")
     frontend_proc = start_server(frontend, COLORS[0])
+    procs.append(frontend_proc)
+    if not frontend['ready_check']():
+        print(f"Frontend server on port {frontend['port']} did not start in time.")
+        sys.exit(1)
+    print("Frontend server is running.")
+
+    # Start studio
+    studio = next(s for s in SERVERS if s['name'] == 'studio')
+    print("Starting AutoGen Studio server...")
     studio_proc = start_server(studio, COLORS[2])
+    procs.append(studio_proc)
+    if not studio['ready_check']():
+        print(f"Studio server on port {studio['port']} did not start in time.")
+        sys.exit(1)
+    print("AutoGen Studio server is running.")
+
     print("All servers started.")
     print("Opening frontend in browser...")
     import webbrowser
@@ -131,7 +196,7 @@ def main():
             time.sleep(1)
     except KeyboardInterrupt:
         print("Stopping all servers...")
-        for proc in [backend_proc, frontend_proc, studio_proc]:
+        for proc in procs:
             try:
                 proc.terminate()
             except Exception:

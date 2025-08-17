@@ -1,0 +1,26 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+.statusExecuting {
+  color: #fff;
+  background: #111827;
+  text-align: center;
+  padding: 1rem;
+}
+
+.statusIdle {
+  color: #fff;
+  background: #222;
+  text-align: center;
+  padding: 1rem;
+}
+
+.message {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #222;
+  color: #fff;
+}

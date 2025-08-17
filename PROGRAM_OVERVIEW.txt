@@ -1,0 +1,66 @@
+copilot/
+├── .git/                      # Git version control data
+├── .gitignore                 # Excludes build, cache, and dependency files from git
+├── .vscode/                   # VS Code workspace settings
+├── backend/                   # Python backend (FastAPI, AutoGen, Ollama integration)
+│   ├── agent_manager.py       # Orchestrates AI agents, streams responses using Ollama Llama 3.3 70B
+│   ├── code/                  # (Reserved) For agent code execution or scripts
+│   ├── main.py                # FastAPI server, exposes /run_crew endpoint, CORS enabled
+│   ├── poetry.lock            # Poetry lock file for reproducible Python dependencies
+│   ├── pyproject.toml         # Poetry config, lists backend dependencies
+│   ├── README.md              # Backend documentation and setup instructions
+│   ├── requirements.txt       # (Legacy) Python requirements, reference only
+│   └── __pycache__/           # Python bytecode cache (ignored by git)
+├── check_and_install_deps.py  # (Optional) Script for dependency checks/installation
+├── frontend/                  # Next.js/React frontend (CopilotKit UI)
+│   ├── .next/                 # Next.js build output (ignored by git)
+│   ├── app/                   # Main frontend app directory
+│   │   ├── globals.css        # Global styles (TailwindCSS)
+│   │   ├── layout.tsx         # Root layout, wraps app in CopilotKit, configures agent endpoint
+│   │   ├── page.tsx           # Home page, UI entry point
+│   │   └── useCrewAgent.ts    # Custom React hook for streaming agent responses from backend
+│   ├── node_modules/          # Frontend dependencies (ignored by git)
+│   ├── package-lock.json      # NPM lock file for reproducible JS dependencies
+│   ├── package.json           # Frontend dependencies and scripts
+│   ├── README.md              # Frontend documentation and setup instructions
+│   └── tsconfig.json          # TypeScript configuration
+├── start_all.py               # Orchestration script: kills old servers, starts backend, waits, then starts frontend and studio
+
+---
+
+Workflow & Server/Service Overview
+
+1. Ollama Model Server
+   - You run `ollama pull llama3.3:70b` and `ollama run llama3.3:70b` in your terminal.
+   - This starts the Llama 3.3 70B model server at `http://127.0.0.1:11434`.
+
+2. Backend (FastAPI + AutoGen)
+   - Started by `start_all.py` (or manually via Poetry).
+   - Exposes `/run_crew` endpoint for agent orchestration.
+   - Uses AutoGen and Ollama for agent reasoning and streaming responses.
+
+3. Frontend (Next.js + CopilotKit)
+   - Started by `start_all.py` (or manually via NPM).
+   - Connects to backend via CopilotKit, POSTs tasks to `/run_crew`.
+   - UI for chat, agent orchestration, and streaming results.
+
+4. AutoGen Studio
+   - Started by `start_all.py` (or manually).
+   - Visual agent builder for advanced workflows (optional).
+
+5. Orchestration Script (`start_all.py`)
+   - Kills any running servers on required ports.
+   - Starts backend first, waits for it to be ready.
+   - Starts frontend and AutoGen Studio.
+   - Opens frontend in browser.
+   - Streams logs with color coding for easy debugging.
+
+---
+
+Summary
+
+Your program is a robust, modern, full-stack AI agent system with:
+- Backend: FastAPI, AutoGen, Ollama Llama 3.3 70B, streaming orchestration.
+- Frontend: Next.js, React, CopilotKit, custom hooks for agent streaming.
+- Orchestration: Automated startup, error handling, and log streaming.
+- Version Control: Optimized `.gitignore`, clean repo structure.

@@ -1,39 +1,124 @@
+
 # agent_manager.py
-# NOTE: The 'openai' Python package must be installed for autogen-ext to work, even when using OpenAI-compatible APIs like Ollama (llama3).
-# Install with: poetry add openai
+import pyautogen as autogen
 import asyncio
+import os
+from dotenv import load_dotenv
 from typing import AsyncGenerator
-from autogen_agentchat.agents import AssistantAgent
-from autogen_ext.models.openai import OpenAIChatCompletionClient
-from autogen_agentchat.messages import TextMessage
-from autogen_core import CancellationToken
+
+load_dotenv()
+
+MODEL_NAME = os.getenv("MODEL_NAME", "llama3:8b")
+BASE_URL = os.getenv("BASE_URL", "http://127.0.0.1:11434/v1")
+API_KEY = os.getenv("API_KEY", "ollama")
+
+message_queue = asyncio.Queue()
+
+def create_reply_func(agent_name: str, recipient_name: str):
+    """Factory to create a reply function that formats and queues agent messages."""
+    def reply_func(recipient, messages, sender, config):
+        last_message = messages[-1]
+        content = last_message.get("content", "")
+        formatted_message = f"**{agent_name} to {recipient_name}**:\n{content}\n\n---\n"
+        asyncio.run(message_queue.put(formatted_message))
+        return False, None
+    return reply_func
 
 async def run_autogen_crew_streaming(task: str) -> AsyncGenerator[str, None]:
     """
-    Sets up and runs the AutoGen agent crew, streaming messages back as they are generated.
+    Runs a multi-agent AutoGen crew and streams their conversation as formatted strings.
     """
-    print(f"🤖 AutoGen crew received task: '{task}'")
-    yield "Crew is starting...\n"
+import pyautogen as autogen
+import asyncio
+import os
+from dotenv import load_dotenv
+from typing import AsyncGenerator
 
-    # Example: Using OpenAI-compatible local model (Ollama)
-    model_client = OpenAIChatCompletionClient(
-        model="llama3.3:70b",
-        base_url="http://127.0.0.1:11434/v1",
-        api_key="ollama"
+# --- Configuration Loading ---
+load_dotenv()
+
+# Load LLM settings
+MODEL_NAME = os.getenv("MODEL_NAME")
+BASE_URL = os.getenv("BASE_URL")
+API_KEY = os.getenv("API_KEY")
+
+# Load Agent settings
+AGENT_WORK_DIR = os.getenv("AGENT_WORK_DIR", "coding")
+# Handle boolean conversion for USE_DOCKER
+USE_DOCKER = os.getenv("USE_DOCKER", "False").lower() in ('true', '1', 't')
+# Handle integer conversion for MAX_CONVERSATION_ROUNDS
+try:
+    MAX_CONVERSATION_ROUNDS = int(os.getenv("MAX_CONVERSATION_ROUNDS", "15"))
+except ValueError:
+    MAX_CONVERSATION_ROUNDS = 15
+
+# --- Real-time Streaming Mechanism ---
+message_queue = asyncio.Queue()
+
+def create_stream_writer(agent_name: str):
+    def stream_writer(recipient, messages, sender, config):
+        last_message = messages[-1]
+        content = last_message.get("content", "")
+        formatted_message = f"**Agent: {agent_name}**:\n{content}\n\n---\n"
+        asyncio.run(message_queue.put(formatted_message))
+        return False, None
+    return stream_writer
+
+# --- Core Agent Logic ---
+async def run_autogen_crew_streaming(task: str) -> AsyncGenerator[str, None]:
+    print(f"🤖 Crew received task: '{task}'")
+    yield "**[SYSTEM]** Crew is assembling and receiving the task...\n\n---\n"
+    
+    config_list = [{"model": MODEL_NAME, "base_url": BASE_URL, "api_key": API_KEY}]
+    llm_config = {"config_list": config_list, "cache_seed": None}
+
+    planner = autogen.AssistantAgent(
+        name="Planner",
+        llm_config=llm_config,
+        system_message="You are a master planner..."
+    )
+    engineer = autogen.AssistantAgent(
+        name="Engineer",
+        llm_config=llm_config,
+        system_message="You are an expert software engineer..."
+    )
+    critic = autogen.AssistantAgent(
+        name="Critic",
+        llm_config=llm_config,
+        system_message="You are a code critic and quality assurance expert..."
+    )
+    user_proxy = autogen.UserProxyAgent(
+        name="Executor",
+        human_input_mode="NEVER",
+        code_execution_config={"work_dir": AGENT_WORK_DIR, "use_docker": USE_DOCKER},
     )
 
-    assistant = AssistantAgent(
-        name="Assistant",
-        system_message="You are a helpful assistant.",
-        model_client=model_client,
+    for agent in [planner, engineer, critic, user_proxy]:
+        agent.register_reply(
+            [autogen.Agent, None],
+            reply_func=create_stream_writer(agent.name),
+            trigger=lambda sender: True
+        )
+
+    groupchat = autogen.GroupChat(
+        agents=[user_proxy, planner, engineer, critic],
+        messages=[],
+        max_round=MAX_CONVERSATION_ROUNDS
     )
+    manager = autogen.GroupChatManager(groupchat=groupchat, llm_config=llm_config)
 
-    cancellation_token = CancellationToken()
-    # Stream agent response
-    async for response in assistant.on_messages_stream(
-        [TextMessage(content=task, source="user")],
-        cancellation_token
-    ):
-        yield response.chat_message.to_text() if hasattr(response, 'chat_message') else str(response)
+    initial_message = f"The user has assigned the following task: {task}..."
 
-    await model_client.close()
+    loop = asyncio.get_event_loop()
+    await loop.run_in_executor(
+        None,
+        lambda: user_proxy.initiate_chat(manager, message=initial_message)
+    )
+    
+    await message_queue.put("\n**[SYSTEM]** Crew has finished the task.\n\n---\n")
+
+    while True:
+        message = await message_queue.get()
+        yield message
+        if "**[SYSTEM]** Crew has finished the task." in message:
+            break

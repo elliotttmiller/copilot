@@ -17,7 +17,7 @@ async def run_autogen_crew_streaming(task: str) -> AsyncGenerator[str, None]:
 
     # Example: Using OpenAI-compatible local model (Ollama)
     model_client = OpenAIChatCompletionClient(
-        model="llama3:8b",
+        model="llama3.3:70b",
         base_url="http://127.0.0.1:11434/v1",
         api_key="ollama"
     )

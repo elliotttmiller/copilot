@@ -1,0 +1,34 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Elliott Miller",email = "elliotttmiller@hotmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi (>=0.116.1,<0.117.0)",
+    "uvicorn (>=0.35.0,<0.36.0)",
+    "pyautogen (>=0.10.0,<0.11.0)",
+    "python-dotenv (>=1.1.1,<2.0.0)",
+    "autogen-agentchat (>=0.7.2,<0.8.0)",
+    "autogen-ext (>=0.7.2,<0.8.0)",
+    "openai (>=1.99.9,<2.0.0)",
+    "tiktoken (>=0.11.0,<0.12.0)",
+]
+
+# --- Poetry Dependency Update Instructions ---
+# To update each dependency to the latest compatible version, use:
+# poetry update fastapi
+# poetry update uvicorn
+# poetry update pyautogen
+# poetry update python-dotenv
+# -------------------------------------------
+
+package-mode = false
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

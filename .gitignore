@@ -1,0 +1,51 @@
+# Node
+node_modules/
+.next/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# VSCode
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Env
+.env
+.env.*
+
+# Misc
+*.swp
+*.swo
+
+# Build
+/dist/
+/build/
+
+# Coverage
+coverage/
+
+# Others
+*.bak
+*.tmp
+
+# Ignore frontend build artifacts
+frontend/node_modules/
+frontend/.next/
+
+# Ignore backend build artifacts
+backend/__pycache__/
+backend/*.pyc
+backend/*.pyo
+backend/*.pyd
+
+# Ignore poetry lock backup
+backend/poetry.lock.backup
